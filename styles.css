@@ -1,0 +1,27 @@
+body {
+background-color: gray;
+width: 100%;
+}
+
+#board {
+margin-top: 2rem;
+margin-left: 10rem;
+width: 480px;
+}
+
+.piece-box {
+height: 60px;
+width: 60px;
+}
+
+.black-box {
+background-color: black;
+}
+
+.white-box {
+background-color: white;
+}
+
+.div-row {
+display: flex;
+}
