@@ -1,33 +1,41 @@
-let parentDiv = document.querySelector("#board");
+const gameBoard = document.querySelector("#gameboard");
+const playerDisplay = document.querySelector("#player");
+const infoDisplay = document.querySelector("#info-display");
+const width = 8;
 
-let alphas = "abcdefgh".split("");
-let nums = "87654321".split("");
+const startPieces = [
+    rook, knight, bishop, queen, king, bishop, knight, rook,
+    pawn, pawn, pawn, pawn, pawn, pawn, pawn, pawn,
+    "", "", "", "", "", "", "", "",
+    "", "", "", "", "", "", "", "",
+    "", "", "", "", "", "", "", "",
+    "", "", "", "", "", "", "", "",
+    pawn, pawn, pawn, pawn, pawn, pawn, pawn, pawn,
+    rook, knight, bishop, queen, king, bishop, knight, rook,
+]
 
-console.log(alphas);
-console.log(nums);
-
-let chessTable = document.createElement("div");
-
-for (let i = 0; i < 8; i++) {
-    let divRow = document.createElement("div");
-    divRow.setAttribute("class", "div-row");
-
-    for (let j = 0; j < 8; j++) {
-        let divData = document.createElement("div");
-        let boxId = alphas[j] + nums[i];
-
-        if ((i + j) % 2 == 0) {
-            divData.setAttribute("class", "piece-box white-box");
-            divData.setAttribute("id", boxId);
-            divRow.appendChild(divData);
+function createBoard() {
+    startPieces.forEach((startPiece, i) => {
+        const square = document.createElement("div")
+        square.classList.add("square");
+        square.innerHTML = startPiece
+        square.setAttribute("square-id", i)
+        
+        const row =  Math.floor( (63 - i) / 8) + 1;
+        if ( row % 2 === 0) {
+            square.classList.add(i % 2 === 0 ? "beige" : "brown");
         } else {
-            divData.setAttribute("class", "piece-box black-box");
-            divData.setAttribute("id", boxId);
-            divRow.appendChild(divData);
+            square.classList.add(i % 2 === 0 ? "brown" : "beige");
         }
-    }
-    parentDiv.appendChild(divRow);
+        gameBoard.append(square);
+
+        if (i <= 15) {
+            square.firstChild.firstChild.classList.add("black");
+        }
+        if ( i >= 48 ) {
+            square.firstChild.firstChild.classList.add("white");
+        }
+    })
 }
 
-parentDiv.setAttribute("cellspacing", "0");
-document.body.appendChild(parentDiv);
+createBoard();

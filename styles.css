@@ -1,27 +1,29 @@
-body {
-background-color: gray;
-width: 100%;
+#gameboard {
+    width: 320px;
+    height: 320px;
+    display: flex;
+    flex-wrap: wrap;
 }
-
-#board {
-margin-top: 2rem;
-margin-left: 10rem;
-width: 480px;
+.square {
+    height: 40px;
+    width: 40px;
 }
-
-.piece-box {
-height: 60px;
-width: 60px;
+.piece img {
+    max-height: 30px;
+    max-width: 30px;
+    margin: 5px;
 }
-
-.black-box {
-background-color: black;
+.beige {
+    background-color: rgb(110, 110, 98);
 }
-
-.white-box {
-background-color: white;
+.brown {
+    background-color: rgb(169, 43, 43);
 }
-
-.div-row {
-display: flex;
+.black {
+    filter: invert(0);
+    /* fill: rgb(28, 28, 28); */
+}
+.white {
+    filter: invert(1);
+    /* fill: rgb(255, 255, 255); */
 }

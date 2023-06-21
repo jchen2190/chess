@@ -1,0 +1,6 @@
+const king = '<div class="piece" id="king"><img src="./images/chess-king.svg" /></div>'
+const queen = '<div class="piece" id="queen"><img src="./images/chess-queen.svg" /></div>'
+const rook = '<div class="piece" id="rook"><img src="./images/chess-rook.svg" /></div>'
+const bishop = '<div class="piece" id="bishop"><img src="./images/chess-bishop.svg" /></div>'
+const knight = '<div class="piece" id="knight"><img src="./images/chess-knight.svg" /></div>'
+const pawn = '<div class="piece" id="pawn"><img src="./images/chess-pawn.svg" /></div>'
