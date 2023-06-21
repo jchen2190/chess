@@ -7,11 +7,22 @@
 .square {
     height: 40px;
     width: 40px;
+    position: relative;
 }
-.piece img {
-    max-height: 30px;
-    max-width: 30px;
+.square svg {
+    height: 30px;
+    width: 30px;
     margin: 5px;
+    position: relative;
+    z-index: -9;
+}
+path {
+    position: relative;
+    z-index: -10;
+}
+.piece { 
+    position: relative;
+    z-index: 9;
 }
 .beige {
     background-color: rgb(110, 110, 98);
@@ -20,10 +31,10 @@
     background-color: rgb(169, 43, 43);
 }
 .black {
-    filter: invert(0);
-    /* fill: rgb(28, 28, 28); */
+    /* filter: invert(0); */
+    fill: rgb(28, 28, 28);
 }
 .white {
-    filter: invert(1);
-    /* fill: rgb(255, 255, 255); */
+    /* filter: invert(1); */
+    fill: rgb(255, 255, 255);
 }
