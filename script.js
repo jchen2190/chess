@@ -53,6 +53,8 @@ let startPositionId;
 let draggedElement;
 
 function dragStart(e) {
+    // console.log(e.target);
+    // console.log(e.target.parentNode.getAttribute("square-id"));
     startPositionId = e.target.parentNode.getAttribute("square-id");
     draggedElement = e.target;
 }
@@ -65,25 +67,27 @@ function dragDrop(e) {
     const taken = e.target.classList.contains("piece");
     const valid = checkIfValid(e.target);
     const opponentGo = playerGo === "white" ? "black" : "white";
-    const takenByOpponent = e.target.firstChild?.classList.contains("opponentGo")
+    const takenByOpponent = e.target.firstChild?.classList.contains(opponentGo)
+    console.log(takenByOpponent);
 
     if (correctGo) {
-        // must check this first
-        if (takenByOpponent && valid) {
-            e.target.parentNode.append(draggedElement);
-            e.target.remove();
-            changePlayer();
-            return;
-        }
-
-        if (taken && !takenByOpponent) {
-            infoDisplay.textContent = "you cannot go here!";
-            setTimeout(() => infoDisplay.textContent = "", 2000);
-            return;
-        }
-
         if (valid) {
+            if (takenByOpponent) {
+                e.target.parentNode.append(draggedElement);
+                e.target.remove();
+                checkForWin();
+                changePlayer();
+                return;
+            }
+
+            if (taken) {
+                infoDisplay.textContent = "You cannot go here!";
+                setTimeout(() => infoDisplay.textContent = "", 2000);
+                return;
+            }
+
             e.target.append(draggedElement);
+            checkForWin();
             changePlayer();
             return;
         }
@@ -94,10 +98,11 @@ function checkIfValid(target) {
     const targetId = Number(target.getAttribute("square-id"));
     const startId = Number(startPositionId);
     const piece = draggedElement.id
-    console.log(target.parentNode.getAttribute("square-id"));
+    // console.log(target.parentNode.getAttribute("square-id"));
     console.log('targetId', targetId);
     console.log('startId', startId);
     console.log('piece', piece)
+    console.log(document.querySelector(`[square-id="${startId+ width}"]`))
 
     switch(piece) {
         case "pawn" :
@@ -107,7 +112,7 @@ function checkIfValid(target) {
                 startId + width === targetId ||
                 startId + width - 1 === targetId && document.querySelector(`[square-id="${startId + width - 1}"]`).firstChild ||
                 startId + width + 1 === targetId && document.querySelector(`[square-id="${startId + width + 1}"]`).firstChild
-                ) {
+            ) {
                 return true;
             }
             break;
@@ -311,4 +316,20 @@ function revertIds() {
     allSquares.forEach((square, i) => {
         square.setAttribute("square-id", i)
     })
+}
+
+// TODO: Get check/checkmate functions instead of directly taking "King" to end game
+function checkForWin() {
+    const kings = Array.from(document.querySelectorAll("#king"))
+    // console.log(kings)
+    if (!kings.some(king => king.firstChild.classList.contains("white"))) {
+        infoDisplay.innerHTML = "Black player wins!";
+        const allSquares = document.querySelectorAll(".square");
+        allSquares.forEach(square => square.firstChild?.setAttribute("draggable", false));
+    }
+    if (!kings.some(king => king.firstChild.classList.contains("black"))) {
+        infoDisplay.innerHTML = "White player wins!";
+        const allSquares = document.querySelectorAll(".square");
+        allSquares.forEach(square => square.firstChild?.setAttribute("draggable", false));
+    }
 }
