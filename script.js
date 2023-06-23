@@ -69,40 +69,38 @@ function dragDrop(e) {
     const valid = checkIfValid(e.target);
     const opponentGo = playerGo === "white" ? "black" : "white";
     const takenByOpponent = e.target.firstChild?.classList.contains(opponentGo)
-    console.log(takenByOpponent);
 
-    if (correctGo) {
-        if (valid) {
-            if (takenByOpponent) {
-                e.target.parentNode.append(draggedElement);
-                e.target.remove();
-                checkForWin();
-                changePlayer();
-                return;
-            }
-
-            if (taken) {
-                infoDisplay.textContent = "You cannot go here!";
-                setTimeout(() => infoDisplay.textContent = "", 2000);
-                return;
-            }
-
-            e.target.append(draggedElement);
+    if (correctGo && valid) {
+        if (takenByOpponent) {
+            e.target.parentNode.append(draggedElement);
+            e.target.remove();
             checkForWin();
             changePlayer();
             return;
         }
+
+        if (taken) {
+            infoDisplay.textContent = "You cannot go here!";
+            setTimeout(() => infoDisplay.textContent = "", 2000);
+            return;
+        }
+
+        e.target.append(draggedElement);
+        checkForWin();
+        changePlayer();
+        return;
     }
 }
 
 function checkIfValid(target) {
-    const targetId = Number(target.getAttribute("square-id"));
+    const targetId = Number(target.getAttribute("square-id")) || Number(target.parentNode.getAttribute("square-id"));
     const startId = Number(startPositionId);
     const piece = draggedElement.id
+    console.log(Number(target.getAttribute("square-id")));
     // console.log(target.parentNode.getAttribute("square-id"));
-    console.log('targetId', targetId);
-    console.log('startId', startId);
-    console.log('piece', piece)
+    // console.log('targetId', targetId);
+    // console.log('startId', startId);
+    // console.log('piece', piece)
     console.log(document.querySelector(`[square-id="${startId+ width}"]`))
 
     switch(piece) {
